@@ -5,6 +5,7 @@ const app = Vue.createApp({
             total_hits: a,
             current_hit: 1,
             current_lang: '',
+            hits_data: null,
         }
     },
     methods: {
@@ -22,9 +23,6 @@ const app = Vue.createApp({
         },
         confirm_lang(lang) {
             this.current_lang = lang
-            $.getJSON('http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.quotes%20WHERE%20symbol%3D%27WRC%27&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys&callback', function(data) {
-                // JSON result in `data` variable
-            });
         },
         next_hit() {
             this.current_hit = this.current_hit + 1
@@ -47,6 +45,13 @@ const app = Vue.createApp({
             // $('.language-button').hide();
             $("#task").show(200);
         });
+        if (this.current_lang != "") {
+            console.log(this.current_lang)
+            axios 
+            .get(`https://raw.githubusercontent.com/Yao-Dou/multipit_multilingual/main/data/jul_3-13_language_dict_with_sort_and_num_selection_${this.current_lang}.json`)
+            .then(response => (this.hits_data = response))
+            console.log(this.hits_data)
+        }
     }
 })
 
