@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Annotation</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="css/index.css"> 
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  </head>
+  <body class="sans-serif">
+    <div id="app" class="container card mb-3 card-body">
+        <section>
+            <p class="mt0 f1">Introduction</p>
+            <p class="f3">
+                Congratulation on passing the qualification!
+            </p>
+            <p class="f4">
+                Now, you will start to annotate real data. <br>
+                First, please select one of the following languages that you want to annotate.
+            </p>
+            <div class="cf">
+                <div class="language-button fl w-23 link black dt hide-child bw1 ba b--black-80 pa4 br2 pointer mr3 tc f3" data-lang="ar">
+                    عربي
+                </div>
+                <div class="language-button fl w-23 link black dt hide-child bw1 ba b--black-80 pa4 br2 pointer mr3 tc f3" data-lang="fr">
+                    Français
+                </div>
+                <div class="language-button fl w-23 link black dt hide-child bw1 ba b--black-80 pa4 br2 pointer mr3 tc f3" data-lang="hi">
+                    हिन्दी
+                </div>
+                <div class="language-button fl w-23 link black dt hide-child bw1 ba b--black-80 pa4 br2 pointer tc f3" data-lang="sp">
+                    Español
+                </div>
+            </div>
+            <div class="cf mt2">
+                <div @click="confirm_lang('ar')" class="confirm-language fl w-23 link black dt hide-child bw1 ba b--black-80 pa2 br2 pointer mr3 tc f5" data-lang="ar">
+                    Click me to confirm your selection.
+                </div>
+                <div @click="confirm_lang('fr')" class="confirm-language fl w-23 link black dt hide-child bw1 ba b--black-80 pa2 br2 pointer mr3 tc f5" data-lang="fr">
+                    Click me to confirm your selection.
+                </div>
+                <div @click="confirm_lang('hi')" class="confirm-language fl w-23 link black dt hide-child bw1 ba b--black-80 pa2 br2 pointer mr3 tc f5" data-lang="hi">
+                    Click me to confirm your selection.
+                </div>
+                <div @click="confirm_lang('sp')" class="confirm-language fl w-23 link black dt hide-child bw1 ba b--black-80 pa2 br2 pointer tc f5" data-lang="sp">
+                    Click me to confirm your selection.
+                </div>
+            </div>
+        </section>
+        <section id="task">
+            <p class="mt2 f1">Task Description</p>
+            <p class="f3">
+                There are in total <span>{{total_hits}}</span> examples / problems / hits. Each hit is conducted in two steps:
+                <ul>
+                    <li class="f4">
+                        <span class="f4 b">Step 1</span>: you will be given two groups, where each group contains 1
+                        seed sentence and 10 candidate sentences. You will be asked to select all the candidate sentences
+                        that are paraprhase of the seed sentence in each group.<br>
+                        Based on the number of selected sentences, you will be asked to annotate a corresponding number of sentence pairs in Step 2.
+                    </li>
+                    <li class="f4">
+                        <span class="f4 b">Step 2</span>: you will be given a number (20 - 50) of sentences pairs and asked to anntoate each pair as paraphrases or not.
+                    </li>
+                </ul>
+            </p>
+        </section>
+        <section id="hit">
+            <p class="mt2 f1">Hits</p>
+            <div class="w-100 mb3 tc f3">
+                <button @click="prev_hit" class="black dim br-100 ba pa1 bg-white pointer">&nbsp;&#8249;&nbsp;</button>
+                Hit <span>{{current_hit}}</span> / <span>{{total_hits}}&nbsp;</span>
+                <button @click="next_hit" class="black dim br-100 ba pa1 bg-white pointer">&nbsp;&#8250;&nbsp;</button>
+            </div>
+            <div class="cf">
+                <div class="fl w-48 ba b--black-80 br3 mr2 pa2">
+                    <span class="f4 b i mb1">Group 1: </span>
+                    <p class="f3 mt1">
+                        <span class="f4 b">Seed Sentence</span>
+                        <br>
+                        <span class="f4">{{seed_sentence_1}}</span>
+                    </p>
+                    <p class="f3">
+                        <span class="f4 b">Candidate Sentences</span>
+                        <br>
+                        <ol>
+                            <li v-for="(candidate_sentence, index) in candidate_sentences_1">
+                                <span class="f4">{{candidate_sentence}}</span>
+                                <span class="f4">{{index + 1}}</span>
+                            </li>
+                        </ol>
+                    </p>
+                </div>
+                <div class="fl w-48 ba b--black-80 br3 mr2 pa2">
+                    <span class="f4 b i mb1">Group 2: </span>
+                    <p class="f3 mt1">
+                        <span class="f4 b">Seed Sentence:</span>
+                        <br>
+                        <span class="f4">{{seed_sentence_2}}</span>
+                    </p>
+                    <p class="f3">
+                        <span class="f4 b">Candidate Sentences:</span>
+                        <br>
+                        <ol>
+                            <li v-for="(candidate_sentence, index) in candidate_sentences_2">
+                                <span class="f4">{{candidate_sentence}}</span>
+                                <span class="f4">{{index + 1}}</span>
+                            </li>
+                        </ol>
+                    </p>
+                </div>
+            </div>
+        </section>
+      </div>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
