@@ -8,8 +8,7 @@
     crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    
+
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
@@ -37,7 +36,7 @@
                 <div class="language-button fl w-23 link black dt hide-child bw1 ba b--black-80 pa4 br2 pointer mr3 tc f3" data-lang="hi">
                     हिन्दी
                 </div>
-                <div class="language-button fl w-23 link black dt hide-child bw1 ba b--black-80 pa4 br2 pointer tc f3" data-lang="sp">
+                <div class="language-button fl w-23 link black dt hide-child bw1 ba b--black-80 pa4 br2 pointer tc f3" data-lang="es">
                     Español
                 </div>
             </div>
@@ -51,7 +50,7 @@
                 <div @click="confirm_lang('hi')" class="confirm-language fl w-23 link black dt hide-child bw1 ba b--black-80 pa2 br2 pointer mr3 tc f5" data-lang="hi">
                     Click me to confirm your selection.
                 </div>
-                <div @click="confirm_lang('sp')" class="confirm-language fl w-23 link black dt hide-child bw1 ba b--black-80 pa2 br2 pointer tc f5" data-lang="sp">
+                <div @click="confirm_lang('es')" class="confirm-language fl w-23 link black dt hide-child bw1 ba b--black-80 pa2 br2 pointer tc f5" data-lang="es">
                     Click me to confirm your selection.
                 </div>
             </div>
@@ -84,12 +83,12 @@
                 <div class="fl w-48 ba b--black-80 br3 mr2 pa2">
                     <span class="f4 b i mb1">Group 1: </span>
                     <p class="f3 mt1">
-                        <span class="f4 b">Seed Sentence</span>
+                        <span class="f4 b">Seed Sentence:</span>
                         <br>
                         <span class="f4">{{seed_sentence_1}}</span>
                     </p>
                     <p class="f3">
-                        <span class="f4 b">Candidate Sentences</span>
+                        <span class="f4 b">Candidate Sentences:</span>
                         <br>
                         <ol>
                             <li v-for="(candidate_sentence, index) in candidate_sentences_1">
